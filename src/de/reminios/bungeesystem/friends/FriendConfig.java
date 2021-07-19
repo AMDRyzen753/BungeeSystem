@@ -39,11 +39,6 @@ public class FriendConfig {
     }
 
     public static void setDefaults () {
-        setDefaultData("MySQL.HOST", "");
-        setDefaultData("MySQL.PORT", 3306);
-        setDefaultData("MySQL.DB", "");
-        setDefaultData("MySQL.USER", "");
-        setDefaultData("MySQL.PASS", "");
         setDefaultData("Messages.Prefix", "§8[§cFriends§8] §7");
         setDefaultData("Messages.NoPlayer", "%prefix%Der Spieler &6%name% &7wurde nicht gefunden.");
         setDefaultData("Messages.AlreadyFriends", "%prefix%Du bist bereits mit &6%name% &7befreundet.");
@@ -66,7 +61,7 @@ public class FriendConfig {
         setDefaultData("Messages.DisableStatus", "%prefix%Dein Onlinestatus wird nicht mehr angezeigt.");
         setDefaultData("Messages.EnableStatus", "%prefix%Dein Onlinestatus wird jetzt angezeigt.");
         setDefaultData("Messages.DisableMSG", "%prefix%Du erhälst keine Nachrichten mehr.");
-        setDefaultData("Messages.EnableMSG", "%prefix%Du erhälst wiedr Nachrichten.");
+        setDefaultData("Messages.EnableMSG", "%prefix%Du erhälst wieder Nachrichten.");
         setDefaultData("Messages.Online", "%prefix%&6%name% &7ist jetzt &aonline&7.");
         setDefaultData("Messages.Offline", "%prefix%&6%name% &7ist jetzt &coffline&7.");
         setDefaultData("Messages.Remove", "%prefix%§6%name% &7wurde als Freund entfernt.");
