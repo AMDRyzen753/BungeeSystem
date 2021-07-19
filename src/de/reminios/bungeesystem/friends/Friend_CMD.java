@@ -2,6 +2,8 @@
 
 package de.reminios.bungeesystem.friends;
 
+import de.reminios.bungeesystem.BungeeSystem;
+import de.reminios.bungeesystem.msg.MSGConfig;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -203,6 +205,17 @@ public class Friend_CMD extends Command {
                 }
                 FriendMethods.updateBoolean(player.getUniqueId().toString(), "Status", true);
                 player.sendMessage(FriendConfig.getMessage("Messages.EnableStatus", "", ""));
+                return;
+            }
+            if(args[0].equalsIgnoreCase("togglemsg")) {
+                boolean aktiv = (boolean) BungeeSystem.plugin.getSql().getData("MSG", "Aktiv", "UUID", player.getUniqueId().toString());
+                if(aktiv) {
+                    BungeeSystem.plugin.getSql().updateData("MSG", "Aktiv", false, "UUID", player.getUniqueId().toString());
+                    player.sendMessage(FriendConfig.getMessage("Messages.DisableMSG", "", ""));
+                } else {
+                    BungeeSystem.plugin.getSql().updateData("MSG", "Aktiv", true, "UUID", player.getUniqueId().toString());
+                    player.sendMessage(FriendConfig.getMessage("Messages.EnableMSG", "", ""));
+                }
                 return;
             }
         }

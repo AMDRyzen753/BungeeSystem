@@ -65,6 +65,8 @@ public class FriendConfig {
         setDefaultData("Messages.EnableJump", "%prefix%Deine Freunde können dir jetzt wieder nachspringen.");
         setDefaultData("Messages.DisableStatus", "%prefix%Dein Onlinestatus wird nicht mehr angezeigt.");
         setDefaultData("Messages.EnableStatus", "%prefix%Dein Onlinestatus wird jetzt angezeigt.");
+        setDefaultData("Messages.DisableMSG", "%prefix%Du erhälst keine Nachrichten mehr.");
+        setDefaultData("Messages.EnableMSG", "%prefix%Du erhälst wiedr Nachrichten.");
         setDefaultData("Messages.Online", "%prefix%&6%name% &7ist jetzt &aonline&7.");
         setDefaultData("Messages.Offline", "%prefix%&6%name% &7ist jetzt &coffline&7.");
         setDefaultData("Messages.Remove", "%prefix%§6%name% &7wurde als Freund entfernt.");
