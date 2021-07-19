@@ -490,6 +490,5 @@ public class Friend_CMD extends Command {
         }
 
     }
-    }
 
 }
