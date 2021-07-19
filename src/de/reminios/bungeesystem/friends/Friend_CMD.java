@@ -3,7 +3,6 @@
 package de.reminios.bungeesystem.friends;
 
 import de.reminios.bungeesystem.BungeeSystem;
-import de.reminios.bungeesystem.msg.MSGConfig;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;

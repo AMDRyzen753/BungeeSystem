@@ -91,7 +91,7 @@ public class MSG extends Command {
                 }
 
                 //Check, ob Empfänger und Sender befreundet
-                if(!FriendMethods.isFriend(player, uuid)) {
+                if(!FriendMethods.isFriend(player, name)) {
                     player.sendMessage(FriendConfig.getMessage("Messages.NoFriends", name, ""));
                     return;
                 }

@@ -57,7 +57,7 @@ public class Answer extends Command {
             return;
         }
         //Check, ob Empfänger und Sender befreundet
-        if(!FriendMethods.isFriend(player, uuid)) {
+        if(!FriendMethods.isFriend(player, name)) {
             player.sendMessage(FriendConfig.getMessage("Messages.NoFriends", name, ""));
             return;
         }
