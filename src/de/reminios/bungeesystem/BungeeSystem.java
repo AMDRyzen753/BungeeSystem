@@ -20,6 +20,9 @@ import de.reminios.bungeesystem.clan.ClanListener;
 import de.reminios.bungeesystem.coinapi.CoinAPI;
 import de.reminios.bungeesystem.coinapi.CoinCommand;
 import de.reminios.bungeesystem.coinapi.CoinConfig;
+import de.reminios.bungeesystem.friends.FriendConfig;
+import de.reminios.bungeesystem.friends.FriendListener;
+import de.reminios.bungeesystem.friends.Friend_CMD;
 import de.reminios.bungeesystem.joinme.JMCommand;
 import de.reminios.bungeesystem.joinme.JMConfig;
 import de.reminios.bungeesystem.msg.Answer;
@@ -124,6 +127,10 @@ public class BungeeSystem extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerListener(this, new MuteListener());
         MuteConfig.mc = new MuteConfig();
 
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new Friend_CMD());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new FriendListener());
+        FriendConfig.setup();
+
         BungeeCord.getInstance().registerChannel("clan");
         BungeeCord.getInstance().registerChannel("CoinAPI");
 
@@ -142,6 +149,7 @@ public class BungeeSystem extends Plugin {
         sql.createTable("Reports", "ID VARCHAR (100),Target VARCHAR (100),Sender VARCHAR (100),Grund VARCHAR (100)");
         sql.createTable("ClanSpieler", "UUID VARCHAR (100),ClanID VARCHAR (100),ClanRole VARCHAR (100),AllowInvites BOOLEAN,ClanInvites VARCHAR (100)");
         sql.createTable("Clans", "ClanID VARCHAR (100),ClanName VARCHAR (100),ClanTag VARCHAR (100)");
+        sql.execute("CREATE TABLE IF NOT EXISTS Friends (UUID VARCHAR (100), Name VARCHAR (100), Enabled VARCHAR (100), Status VARCHAR (100), Online VARCHAR (100), Jump VARCHAR (100), Requests TEXT, Freunde TEXT)");
     }
 
     public MySQL getSql() {
