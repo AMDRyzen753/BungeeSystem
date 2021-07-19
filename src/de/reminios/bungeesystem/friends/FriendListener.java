@@ -18,7 +18,7 @@ public class FriendListener implements Listener {
     @EventHandler
     public void handleJoin (PostLoginEvent event) {
         ProxiedPlayer player = event.getPlayer();
-        if(!FriendMethods.exists(player.getUniqueId().toString())) {
+        if(!BungeeSystem.plugin.getSql().dataExist("Friends", "UUID", "UUID", player.getUniqueId().toString())) {
             FriendMethods.insertPlayer(player);
         } else {
             if(!FriendMethods.getName(player.getUniqueId().toString()).equalsIgnoreCase(player.getName())) {

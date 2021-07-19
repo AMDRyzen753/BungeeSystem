@@ -1,6 +1,8 @@
 package de.reminios.bungeesystem.msg;
 
 import de.reminios.bungeesystem.BungeeSystem;
+import de.reminios.bungeesystem.friends.FriendConfig;
+import de.reminios.bungeesystem.friends.FriendMethods;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -85,6 +87,12 @@ public class MSG extends Command {
                 //Check, ob Empfänger MSG Deaktiviert hat
                 if(!((boolean) BungeeSystem.plugin.getSql().getData("MSG", "Aktiv", "UUID", uuid))) {
                     player.sendMessage(MSGConfig.getMSG("Disable2", name, ""));
+                    return;
+                }
+
+                //Check, ob Empfänger und Sender befreundet
+                if(!FriendMethods.isFriend(player, uuid)) {
+                    player.sendMessage(FriendConfig.getMessage("Messages.NoFriends", name, ""));
                     return;
                 }
 

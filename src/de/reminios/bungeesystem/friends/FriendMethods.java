@@ -12,11 +12,11 @@ import java.util.List;
 public class FriendMethods {
 
     public static boolean exists (String uuid) {
-        return BungeeSystem.plugin.getSql().getData("Friends", "Name", "UUID", uuid).toString() != null;
+        return BungeeSystem.plugin.getSql().dataExist("Friends", "Name", "UUID", uuid);
     }
 
     public static boolean nameExists (String playerName) {
-        return BungeeSystem.plugin.getSql().getData("Friends", "Name", "Name", playerName).toString() != null;
+        return BungeeSystem.plugin.getSql().dataExist("Friends", "Name", "Name", playerName);
     }
 
     public static boolean enabled (String uuid) {

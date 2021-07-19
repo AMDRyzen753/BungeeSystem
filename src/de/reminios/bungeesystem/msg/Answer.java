@@ -1,6 +1,8 @@
 package de.reminios.bungeesystem.msg;
 
 import de.reminios.bungeesystem.BungeeSystem;
+import de.reminios.bungeesystem.friends.FriendConfig;
+import de.reminios.bungeesystem.friends.FriendMethods;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -52,6 +54,11 @@ public class Answer extends Command {
         List<String> blocked = BungeeSystem.plugin.getSql().getArray("MSG", "Blockiert", "UUID", uuid);
         if(blocked.contains(player.getUniqueId().toString())) {
             player.sendMessage(MSGConfig.getMSG("Block3", name, ""));
+            return;
+        }
+        //Check, ob Empfänger und Sender befreundet
+        if(!FriendMethods.isFriend(player, uuid)) {
+            player.sendMessage(FriendConfig.getMessage("Messages.NoFriends", name, ""));
             return;
         }
         //Check, ob Empfänger auf dem Server online
