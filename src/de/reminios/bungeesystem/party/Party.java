@@ -37,6 +37,8 @@ public class Party {
         String msg = PartyConfig.getString("Messages.Leave");
         if(msg.contains("%name%"))
             msg = msg.replaceAll("%name%", player.getName());
+        if(msg.contains("%prefix%"))
+            msg = msg.replaceAll("%prefix%", PartyConfig.getPrefix());
         sayToParty(msg);
         this.player.remove(player);
         PartyCommand.partyManager.getPartyPlayer().remove(player);
