@@ -2,21 +2,26 @@
 
 package de.reminios.bungeesystem.party;
 
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
+import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class PartyManager implements Listener {
 
     private ArrayList<Party> partys;
-    private HashMap<ProxiedPlayer, Party> partyPlayer = new HashMap<>();
-    private HashMap<ProxiedPlayer, ArrayList<Party>> invites = new HashMap<>();
+    private HashMap<ProxiedPlayer, Party> partyPlayer;
+    private HashMap<ProxiedPlayer, ArrayList<Party>> invites;
 
     public PartyManager() {
         partys = new ArrayList<>();
@@ -50,6 +55,22 @@ public class PartyManager implements Listener {
 
     public HashMap<ProxiedPlayer, ArrayList<Party>> getInvites() {
         return invites;
+    }
+
+    @EventHandler
+    public void handlePM (PluginMessageEvent event) {
+        if(!event.getTag().equalsIgnoreCase("BungeeCord"))
+            return;
+        DataInputStream stream = new DataInputStream(new ByteArrayInputStream(event.getData()));
+        try {
+            String channel = stream.readUTF();
+            if(!(channel.equalsIgnoreCase("Party")))
+                return;
+            String uuid = stream.readUTF();
+            String tname = uuid.split(":")[1];
+            uuid = uuid.split(":")[0];
+            PartyCommand.invite(BungeeCord.getInstance().getPlayer(UUID.fromString(uuid)), tname);
+        } catch (IOException ignore) {}
     }
 
     @EventHandler

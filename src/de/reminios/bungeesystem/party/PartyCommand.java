@@ -49,27 +49,7 @@ public class PartyCommand extends Command {
         }
         if(args.length == 2) {
             if(args[0].equalsIgnoreCase("invite")) {
-                String name = args[1];
-                if(BungeeCord.getInstance().getPlayer(name) == null) {
-                    player.sendMessage(PartyConfig.getMSG("NotOnline", name, ""));
-                    return;
-                }
-                ProxiedPlayer target = BungeeCord.getInstance().getPlayer(name);
-                if(partyManager.isInParty(player)) {
-                    if(partyManager.isPartyLeader(player)) {
-                        Party party = partyManager.getPlayerParty(player);
-                        party.invitePlayer(target);
-                        player.sendMessage(PartyConfig.getMSG("Invite", name, ""));
-                        return;
-                    }
-                    player.sendMessage(PartyConfig.getMSG("NotLeader", "", ""));
-                    return;
-                }
-                Party party = new Party(player);
-                partyManager.getPartys().add(party);
-                partyManager.getPartyPlayer().put(player, party);
-                party.invitePlayer(target);
-                player.sendMessage(PartyConfig.getMSG("Invite", name, ""));
+                invite(player, args[1]);
                 return;
             }
             if(args[0].equalsIgnoreCase("promote")) {
@@ -170,4 +150,28 @@ public class PartyCommand extends Command {
             player.sendMessage(TextComponent.fromLegacyText(s));
         }
     }
+
+    public static void invite (ProxiedPlayer player, String name) {
+        if(BungeeCord.getInstance().getPlayer(name) == null) {
+            player.sendMessage(PartyConfig.getMSG("NotOnline", name, ""));
+            return;
+        }
+        ProxiedPlayer target = BungeeCord.getInstance().getPlayer(name);
+        if(partyManager.isInParty(player)) {
+            if(partyManager.isPartyLeader(player)) {
+                Party party = partyManager.getPlayerParty(player);
+                party.invitePlayer(target);
+                player.sendMessage(PartyConfig.getMSG("Invite", name, ""));
+                return;
+            }
+            player.sendMessage(PartyConfig.getMSG("NotLeader", "", ""));
+            return;
+        }
+        Party party = new Party(player);
+        partyManager.getPartys().add(party);
+        partyManager.getPartyPlayer().put(player, party);
+        party.invitePlayer(target);
+        player.sendMessage(PartyConfig.getMSG("Invite", name, ""));
+    }
+
 }
