@@ -32,6 +32,10 @@ import de.reminios.bungeesystem.msg.MSGConfig;
 import de.reminios.bungeesystem.mute.MuteCommand;
 import de.reminios.bungeesystem.mute.MuteConfig;
 import de.reminios.bungeesystem.mute.MuteListener;
+import de.reminios.bungeesystem.party.PCCommand;
+import de.reminios.bungeesystem.party.PartyCommand;
+import de.reminios.bungeesystem.party.PartyConfig;
+import de.reminios.bungeesystem.party.PartyManager;
 import de.reminios.bungeesystem.ping.PingCommand;
 import de.reminios.bungeesystem.ping.PingConfig;
 import de.reminios.bungeesystem.report.JumpCommand;
@@ -130,6 +134,12 @@ public class BungeeSystem extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new Friend_CMD());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new FriendListener());
         FriendConfig.setup();
+
+        PartyCommand.partyManager = new PartyManager();
+        ProxyServer.getInstance().getPluginManager().registerListener(this, PartyCommand.partyManager);
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new PartyCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new PCCommand());
+        PartyConfig.setup();
 
         BungeeCord.getInstance().registerChannel("clan");
         BungeeCord.getInstance().registerChannel("CoinAPI");
