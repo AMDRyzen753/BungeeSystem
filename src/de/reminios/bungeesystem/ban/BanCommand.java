@@ -70,73 +70,7 @@ public class BanCommand extends Command {
                 }
                 return;
             }
-            String name = args[0];
-            if(name.equalsIgnoreCase(player.getName())) {
-                player.sendMessage(BanConfig.getMSG("Self", "", ""));
-                return;
-            }
-            try {
-                String input = args[1];
-                int id = Integer.parseInt(args[1]);
-                if(!(BungeeSystem.plugin.getSql().dataExist("BanIDs", "ID", "ID", id))) {
-                    player.sendMessage(BanConfig.getMSG("NoID2", "", ""));
-                    return;
-                }
-                if(!(player.hasPermission("system.ban." + input))) {
-                    player.sendMessage(BanConfig.getMSG("NoPerms", "", ""));
-                    return;
-                }
-                if(!(BungeeSystem.plugin.getSql().dataExist("Bans", "Name", "Name", name))) {
-                    player.sendMessage(BanConfig.getMSG("NoPlayer", "", ""));
-                    return;
-                }
-                if((boolean) BungeeSystem.plugin.getSql().getData("Bans", "Admin", "Name", name)) {
-                    player.sendMessage(BanConfig.getMSG("Admin", "", ""));
-                    return;
-                }
-                if((boolean) BungeeSystem.plugin.getSql().getData("Bans", "Gebannt", "Name", name)) {
-                    player.sendMessage(BanConfig.getMSG("AlreadyBanned", "", ""));
-                    return;
-                }
-                String von = player.getName();
-                String grund = BungeeSystem.plugin.getSql().getData("BanIDs", "Name", "ID", id).toString();
-                int dauer = (int) BungeeSystem.plugin.getSql().getData("BanIDs", "Dauer", "ID", id);
-                String type = BungeeSystem.plugin.getSql().getData("BanIDs", "Type", "ID", id).toString();
-                BungeeSystem.plugin.getSql().updateData("Bans", "Gebannt", true, "Name", name);
-                BungeeSystem.plugin.getSql().updateData("Bans", "Grund", id, "Name", name);
-                BungeeSystem.plugin.getSql().updateData("Bans", "Von", von, "Name", name);
-                BungeeSystem.plugin.getSql().updateData("Bans", "Bannzeit", Long.toString(System.currentTimeMillis()), "Name", name);
-                List<String> ban = BanConfig.getList("Messages.Ban");
-                for(String msg : ban) {
-                    msg = ChatColor.translateAlternateColorCodes('&', msg);
-                    if(msg.contains("%prefix%"))
-                        msg = msg.replaceAll("%prefix%", BanConfig.getPrefix());
-                    if(msg.contains("%name%"))
-                        msg = msg.replaceAll("%name%", name);
-                    if(msg.contains("%von%"))
-                        msg = msg.replaceAll("%von%", player.getName());
-                    if(msg.contains("%grund%"))
-                        msg = msg.replaceAll("%grund%", grund);
-                    if(msg.contains("%dauer%")) {
-                        if(type.equalsIgnoreCase("Permanent")) {
-                            msg = msg.replaceAll("%dauer%", type);
-                        } else {
-                            msg = msg.replaceAll("%dauer%", Integer.toString(dauer) + " " + type);
-                        }
-
-                    }
-                    for(ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-                        if(all.hasPermission("system.ban.use")) {
-                            all.sendMessage(TextComponent.fromLegacyText(msg));
-                        }
-                    }
-                }
-                if(ProxyServer.getInstance().getPlayer(name) != null) {
-                    ProxyServer.getInstance().getPlayer(name).disconnect(TextComponent.fromLegacyText(BanListener.getBanLayout(ProxyServer.getInstance().getPlayer(name).getUniqueId().toString())));
-                }
-            }catch (NumberFormatException exception) {
-                player.sendMessage(BanConfig.getMSG("NoID", "", ""));
-            }
+            ban(sender, args[0], args[1]);
             return;
         } else if(args.length == 4) {
             if(!player.hasPermission("system.ban.add")) {
@@ -162,6 +96,74 @@ public class BanCommand extends Command {
         for(String s : BanConfig.getList("Messages.Help")) {
             s = ChatColor.translateAlternateColorCodes('&', s);
             player.sendMessage(TextComponent.fromLegacyText(s));
+        }
+    }
+
+    public static void ban (CommandSender sender, String name, String input) {
+        if(name.equalsIgnoreCase(sender.getName())) {
+            sender.sendMessage(BanConfig.getMSG("Self", "", ""));
+            return;
+        }
+        try {
+            int id = Integer.parseInt(input);
+            if(!(BungeeSystem.plugin.getSql().dataExist("BanIDs", "ID", "ID", id))) {
+                sender.sendMessage(BanConfig.getMSG("NoID2", "", ""));
+                return;
+            }
+            if(!(sender.hasPermission("system.ban." + input))) {
+                sender.sendMessage(BanConfig.getMSG("NoPerms", "", ""));
+                return;
+            }
+            if(!(BungeeSystem.plugin.getSql().dataExist("Bans", "Name", "Name", name))) {
+                sender.sendMessage(BanConfig.getMSG("NoPlayer", "", ""));
+                return;
+            }
+            if((boolean) BungeeSystem.plugin.getSql().getData("Bans", "Admin", "Name", name)) {
+                sender.sendMessage(BanConfig.getMSG("Admin", "", ""));
+                return;
+            }
+            if((boolean) BungeeSystem.plugin.getSql().getData("Bans", "Gebannt", "Name", name)) {
+                sender.sendMessage(BanConfig.getMSG("AlreadyBanned", "", ""));
+                return;
+            }
+            String von = sender.getName();
+            String grund = BungeeSystem.plugin.getSql().getData("BanIDs", "Name", "ID", id).toString();
+            int dauer = (int) BungeeSystem.plugin.getSql().getData("BanIDs", "Dauer", "ID", id);
+            String type = BungeeSystem.plugin.getSql().getData("BanIDs", "Type", "ID", id).toString();
+            BungeeSystem.plugin.getSql().updateData("Bans", "Gebannt", true, "Name", name);
+            BungeeSystem.plugin.getSql().updateData("Bans", "Grund", id, "Name", name);
+            BungeeSystem.plugin.getSql().updateData("Bans", "Von", von, "Name", name);
+            BungeeSystem.plugin.getSql().updateData("Bans", "Bannzeit", Long.toString(System.currentTimeMillis()), "Name", name);
+            List<String> ban = BanConfig.getList("Messages.Ban");
+            for(String msg : ban) {
+                msg = ChatColor.translateAlternateColorCodes('&', msg);
+                if(msg.contains("%prefix%"))
+                    msg = msg.replaceAll("%prefix%", BanConfig.getPrefix());
+                if(msg.contains("%name%"))
+                    msg = msg.replaceAll("%name%", name);
+                if(msg.contains("%von%"))
+                    msg = msg.replaceAll("%von%", sender.getName());
+                if(msg.contains("%grund%"))
+                    msg = msg.replaceAll("%grund%", grund);
+                if(msg.contains("%dauer%")) {
+                    if(type.equalsIgnoreCase("Permanent")) {
+                        msg = msg.replaceAll("%dauer%", type);
+                    } else {
+                        msg = msg.replaceAll("%dauer%", Integer.toString(dauer) + " " + type);
+                    }
+
+                }
+                for(ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+                    if(all.hasPermission("system.ban.use")) {
+                        all.sendMessage(TextComponent.fromLegacyText(msg));
+                    }
+                }
+            }
+            if(ProxyServer.getInstance().getPlayer(name) != null) {
+                ProxyServer.getInstance().getPlayer(name).disconnect(TextComponent.fromLegacyText(BanListener.getBanLayout(ProxyServer.getInstance().getPlayer(name).getUniqueId().toString())));
+            }
+        }catch (NumberFormatException exception) {
+            sender.sendMessage(BanConfig.getMSG("NoID", "", ""));
         }
     }
 
