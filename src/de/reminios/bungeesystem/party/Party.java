@@ -3,7 +3,10 @@
 package de.reminios.bungeesystem.party;
 
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ public class Party {
 
     private ProxiedPlayer leader;
     private ArrayList <ProxiedPlayer> player;
+    private boolean pub = false;
 
     public Party (ProxiedPlayer leader) {
         this.leader = leader;
@@ -39,6 +43,7 @@ public class Party {
             msg = msg.replaceAll("%name%", player.getName());
         if(msg.contains("%prefix%"))
             msg = msg.replaceAll("%prefix%", PartyConfig.getPrefix());
+        msg = ChatColor.translateAlternateColorCodes('&', msg);
         sayToParty(msg);
         this.player.remove(player);
         PartyCommand.partyManager.getPartyPlayer().remove(player);
@@ -63,11 +68,25 @@ public class Party {
         msg = ChatColor.translateAlternateColorCodes('&', msg);
         sayToParty(msg);
         PartyCommand.partyManager.getPartyPlayer().put(player, this);
-        PartyCommand.partyManager.getInvites().get(player).remove(this);
+        if(PartyCommand.partyManager.getInvites().containsKey(player))
+            PartyCommand.partyManager.getInvites().get(player).remove(this);
     }
 
     public void invitePlayer (ProxiedPlayer player) {
+        TextComponent msg = new TextComponent();
+        msg.setText(PartyConfig.getPrefix());
+        TextComponent yes = new TextComponent();
+        yes.setText("§8[§aAnnehmen§8] ");
+        yes.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7Einladung annehmen")));
+        yes.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept " + leader.getName()));
+        TextComponent no = new TextComponent();
+        no.setText("§8[§cAblehnen§8] ");
+        no.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7Einladung ablehnen")));
+        no.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party deny " + leader.getName()));
+        msg.addExtra(yes);
+        msg.addExtra(no);
         player.sendMessage(PartyConfig.getMSG("Invite2", leader.getName(), ""));
+        player.sendMessage(msg);
         if(PartyCommand.partyManager.getInvites().containsKey(player))
             PartyCommand.partyManager.getInvites().get(player).add(this);
         else
@@ -97,6 +116,12 @@ public class Party {
         }
     }
 
+    public boolean isPub() {
+        return pub;
+    }
 
+    public void setPub(boolean pub) {
+        this.pub = pub;
+    }
 
 }

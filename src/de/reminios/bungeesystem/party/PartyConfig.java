@@ -38,6 +38,7 @@ public class PartyConfig {
         if(!(contains("Messages.Prefix"))) {
             set("Messages.Prefix", "&8[&5Party&8] &7");
             set("Messages.NoPerms", "%prefix%&7Dazu hast du keine Rechte.");
+            set("Messages.Already", "%prefix%&7Du bist bereits in einer Party. Du musst diese erst verlassen.");
             set("Messages.NotOnline", "%prefix%&7Der Spieler &e%name% &7ist nicht online.");
             set("Messages.NoParty", "%prefix%&7Du befindest dich derzeit in keiner Party.");
             set("Messages.NoParty2", "%prefix%&6%name%&7befindet sich derzeit in keiner Party.");
@@ -46,6 +47,8 @@ public class PartyConfig {
             set("Messages.Invite2", "%prefix%&6%name% &7hat dich in seine Party eingeladen.");
             set("Messages.NoInvite", "%prefix%&7Du hast keine Einladung von &6%name% &7erhalten.");
             set("Messages.Deny", "%prefix%&7Du hast die Einladung von &6%name% &7abgelehnt.");
+            set("Messages.Create", "%prefix%&7Deine Party wurde erfolgreich erstellt.");
+            set("Messages.NotPublic", "%prefix%&7Die Party von &6%name% &7ist nicht öffentlich.");
             set("Messages.NotLeader", "%prefix%&7Du bist nicht der Leiter der Party.");
             set("Messages.NotInParty", "%prefix%&6%name% &7ist nicht in deiner Party.");
             set("Messages.Promote", "%prefix%&6%name% &7wurde erfolgreich befördert.");

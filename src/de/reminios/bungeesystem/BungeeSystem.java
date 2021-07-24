@@ -140,6 +140,7 @@ public class BungeeSystem extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new PartyCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new PCCommand());
         PartyConfig.setup();
+        BungeeCord.getInstance().registerChannel("Party");
 
         BungeeCord.getInstance().registerChannel("clan");
         BungeeCord.getInstance().registerChannel("CoinAPI");

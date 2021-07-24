@@ -626,7 +626,7 @@ public class ClanCommand extends Command {
                     player.sendMessage(ClanConfig.getMSG("NameExist", name, ""));
                     return;
                 }
-                double costs = Double.parseDouble(ClanConfig.getString("ClanCosts"));
+                        double costs = Double.parseDouble(ClanConfig.getString("ClanCosts"));
                 if(!(CoinAPI.getCoins(player.getName()) >= costs)) {
                     double mis = costs - CoinAPI.getCoins(player.getName());
                     player.sendMessage(ClanConfig.getMSG("NoCoins", Double.toString(mis), ""));

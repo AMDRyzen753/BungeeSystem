@@ -46,10 +46,47 @@ public class PartyCommand extends Command {
                 }
                 return;
             }
+            if(args[0].equalsIgnoreCase("create")) {
+                if(!player.hasPermission("system.createparty")) {
+                    player.sendMessage(PartyConfig.getMSG("NoPerms", "", ""));
+                    return;
+                }
+                if(partyManager.isInParty(player)) {
+                    player.sendMessage(PartyConfig.getMSG("Already", "", ""));
+                    return;
+                }
+                Party party = new Party(player);
+                party.setPub(true);
+                partyManager.getPartyPlayer().put(player, party);
+                player.sendMessage(PartyConfig.getMSG("Create", "", ""));
+                return;
+            }
         }
         if(args.length == 2) {
             if(args[0].equalsIgnoreCase("invite")) {
                 invite(player, args[1]);
+                return;
+            }
+            if(args[0].equalsIgnoreCase("join")) {
+                String name = args[1];
+                if(BungeeCord.getInstance().getPlayer(name) == null) {
+                    player.sendMessage(PartyConfig.getMSG("NotOnline", name, ""));
+                    return;
+                }
+                ProxiedPlayer leader = BungeeCord.getInstance().getPlayer(name);
+                if(!partyManager.isInParty(leader)) {
+                    player.sendMessage(PartyConfig.getMSG("NoParty2", name, ""));
+                    return;
+                }
+                Party party = partyManager.getPlayerParty(leader);
+                if(!party.isPub()) {
+                    player.sendMessage(PartyConfig.getMSG("NotPublic", name, ""));
+                    return;
+                }
+                if(partyManager.isInParty(player)) {
+                    partyManager.getPlayerParty(player).removePlayer(player);
+                }
+                party.addPlayer(player);
                 return;
             }
             if(args[0].equalsIgnoreCase("promote")) {
@@ -168,7 +205,6 @@ public class PartyCommand extends Command {
             return;
         }
         Party party = new Party(player);
-        partyManager.getPartys().add(party);
         partyManager.getPartyPlayer().put(player, party);
         party.invitePlayer(target);
         player.sendMessage(PartyConfig.getMSG("Invite", name, ""));
