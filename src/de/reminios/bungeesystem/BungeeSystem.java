@@ -25,6 +25,8 @@ import de.reminios.bungeesystem.friends.FriendListener;
 import de.reminios.bungeesystem.friends.Friend_CMD;
 import de.reminios.bungeesystem.joinme.JMCommand;
 import de.reminios.bungeesystem.joinme.JMConfig;
+import de.reminios.bungeesystem.kick.KickConfig;
+import de.reminios.bungeesystem.kick.Kick_CMD;
 import de.reminios.bungeesystem.msg.Answer;
 import de.reminios.bungeesystem.msg.JoinListener;
 import de.reminios.bungeesystem.msg.MSG;
@@ -141,6 +143,9 @@ public class BungeeSystem extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new PCCommand());
         PartyConfig.setup();
         BungeeCord.getInstance().registerChannel("Party");
+
+        KickConfig.setup();
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new Kick_CMD());
 
         BungeeCord.getInstance().registerChannel("clan");
         BungeeCord.getInstance().registerChannel("CoinAPI");
