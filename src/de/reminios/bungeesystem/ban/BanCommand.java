@@ -20,6 +20,12 @@ public class BanCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(!(sender instanceof ProxiedPlayer)) {
+            if(args.length == 2) {
+                if(!args[0].equalsIgnoreCase("remove")) {
+                    ban(sender, args[0], args[1]);
+                    return;
+                }
+            }
             sender.sendMessage(TextComponent.fromLegacyText("[System] Dieser Command ist nur für Spieler."));
             return;
         }
