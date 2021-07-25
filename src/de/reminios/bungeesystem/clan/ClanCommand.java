@@ -66,7 +66,8 @@ public class ClanCommand extends Command {
                             }
                         }
                         BungeeSystem.plugin.getSql().execute("DELETE FROM Clans WHERE ClanID='" + clanID + "'");
-                        PM.sendToServer("clan", "Update:" + player.getName());
+                        //PM.sendToServer("clan", "Update:" + player.getName());
+                        player.chat("/pm clan secret");
                         return;
                     }
                     prefix = "§6";
@@ -83,7 +84,8 @@ public class ClanCommand extends Command {
                         BungeeCord.getInstance().getPlayer(UUID.fromString(s)).sendMessage(ClanConfig.getMSG("LeaveClan1", prefix + player.getName(), ""));
                     }
                 }
-                PM.sendToServer("clan", "Update:" + player.getName());
+                //PM.sendToServer("clan", "Update:" + player.getName());
+                player.chat("/pm clan secret");
                 return;
             }
             if(args[0].equalsIgnoreCase("reload")) {
@@ -165,7 +167,8 @@ public class ClanCommand extends Command {
                     BungeeSystem.plugin.getSql().updateData("ClanSpieler", "ClanRole", "0", "UUID", s);
                     if(BungeeCord.getInstance().getPlayer(UUID.fromString(s)) != null) {
                         BungeeCord.getInstance().getPlayer(UUID.fromString(s)).sendMessage(ClanConfig.getMSG("Delete1", "", ""));
-                        PM.sendToServer("clan", "Update:" + BungeeCord.getInstance().getPlayer(UUID.fromString(s)).getName());
+                        //PM.sendToServer("clan", "Update:" + BungeeCord.getInstance().getPlayer(UUID.fromString(s)).getName());
+                        player.chat("/pm clan secret");
                     }
                 }
                 return;
@@ -591,7 +594,8 @@ public class ClanCommand extends Command {
                 player.sendMessage(ClanConfig.getMSG("Kick", name, ""));
                 if(BungeeCord.getInstance().getPlayer(UUID.fromString(puuid)) != null) {
                     BungeeCord.getInstance().getPlayer(UUID.fromString(puuid)).sendMessage(ClanConfig.getMSG("Kick1", "", ""));
-                    PM.sendToServer("clan", "Update:" + BungeeCord.getInstance().getPlayer(UUID.fromString(puuid)).getName());
+                    //PM.sendToServer("clan", "Update:" + BungeeCord.getInstance().getPlayer(UUID.fromString(puuid)).getName());
+                    player.chat("/pm clan secret");
                 }
                 return;
             }
@@ -645,7 +649,8 @@ public class ClanCommand extends Command {
                 BungeeSystem.plugin.getSql().updateData("ClanSpieler", "ClanRole", "1", "UUID", player.getUniqueId().toString());
                 CoinAPI.removeCoins(player.getName(), costs);
                 player.sendMessage(ClanConfig.getMSG("ClanCreate", name, clanTag));
-                PM.sendToServer("clan", "Update:" + player.getName());
+                //PM.sendToServer("clan", "Update:" + player.getName());
+                player.chat("/pm clan secret");
                 return;
             }
         }
