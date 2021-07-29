@@ -17,9 +17,6 @@ import de.reminios.bungeesystem.clan.ClanChatCommand;
 import de.reminios.bungeesystem.clan.ClanCommand;
 import de.reminios.bungeesystem.clan.ClanConfig;
 import de.reminios.bungeesystem.clan.ClanListener;
-import de.reminios.bungeesystem.coinapi.CoinAPI;
-import de.reminios.bungeesystem.coinapi.CoinCommand;
-import de.reminios.bungeesystem.coinapi.CoinConfig;
 import de.reminios.bungeesystem.friends.FriendConfig;
 import de.reminios.bungeesystem.friends.FriendListener;
 import de.reminios.bungeesystem.friends.Friend_CMD;
@@ -124,10 +121,6 @@ public class BungeeSystem extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ClanCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ClanChatCommand());
         ClanConfig.setup();
-
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, new CoinCommand());
-        CoinConfig.setup();
-        CoinAPI.setSQL();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MuteCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new MuteListener());
