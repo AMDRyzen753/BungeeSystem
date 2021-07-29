@@ -1,7 +1,7 @@
 package de.reminios.bungeesystem.clan;
 
 import de.reminios.bungeesystem.BungeeSystem;
-import de.reminios.bungeesystem.coinapi.CoinAPI;
+import de.reminios.bungeesystem.coins.CoinAPI;
 import de.reminios.bungeesystem.utils.PM;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
@@ -249,7 +249,7 @@ public class ClanCommand extends Command {
                         BungeeCord.getInstance().getPlayer(UUID.fromString(s)).sendMessage(ClanConfig.getMSG("JoinClan1", player.getName(), ""));
                     }
                 }
-                PM.sendToServer("clan", "Update:" + player.getName());
+                player.chat("/pm clan secret");
                 return;
             }
             if(args[0].equalsIgnoreCase("deny")) {

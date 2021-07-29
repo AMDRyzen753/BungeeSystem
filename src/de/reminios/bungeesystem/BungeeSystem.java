@@ -17,6 +17,7 @@ import de.reminios.bungeesystem.clan.ClanChatCommand;
 import de.reminios.bungeesystem.clan.ClanCommand;
 import de.reminios.bungeesystem.clan.ClanConfig;
 import de.reminios.bungeesystem.clan.ClanListener;
+import de.reminios.bungeesystem.coins.CoinConfig;
 import de.reminios.bungeesystem.friends.FriendConfig;
 import de.reminios.bungeesystem.friends.FriendListener;
 import de.reminios.bungeesystem.friends.Friend_CMD;
@@ -58,6 +59,7 @@ public class BungeeSystem extends Plugin {
     public static BungeeSystem plugin;
 
     private MySQL sql;
+    public MySQL coinSQL;
 
     @Override
     public void onEnable() {
@@ -136,6 +138,9 @@ public class BungeeSystem extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new PCCommand());
         PartyConfig.setup();
         BungeeCord.getInstance().registerChannel("Party");
+
+        CoinConfig.setup();
+        coinSQL = new MySQL(CoinConfig.getConfig().getString("SQL.HOST"), CoinConfig.getConfig().getInt("SQL.Port"), CoinConfig.getConfig().getString("SQL.DB"), CoinConfig.getConfig().getString("SQL.User"), CoinConfig.getConfig().getString("SQL.Pass"));
 
         KickConfig.setup();
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new Kick_CMD());
