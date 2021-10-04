@@ -32,6 +32,7 @@ import de.reminios.bungeesystem.msg.MSGConfig;
 import de.reminios.bungeesystem.mute.MuteCommand;
 import de.reminios.bungeesystem.mute.MuteConfig;
 import de.reminios.bungeesystem.mute.MuteListener;
+import de.reminios.bungeesystem.mute.UnmuteCommand;
 import de.reminios.bungeesystem.party.PCCommand;
 import de.reminios.bungeesystem.party.PartyCommand;
 import de.reminios.bungeesystem.party.PartyConfig;
@@ -125,6 +126,7 @@ public class BungeeSystem extends Plugin {
         ClanConfig.setup();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MuteCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnmuteCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new MuteListener());
         MuteConfig.mc = new MuteConfig();
 

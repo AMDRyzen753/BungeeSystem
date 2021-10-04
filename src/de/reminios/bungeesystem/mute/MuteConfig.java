@@ -53,6 +53,8 @@ public class MuteConfig {
         setDefaultData("NoPlayer", "%prefix%Der Spieler &6%name% &7wurde nicht gefunden.");
         setDefaultData("MuteList", "%prefix%&3Liste der Mutegründe:");
         setDefaultData("NoReasons", "§7- §cEs gibt noch keine Mutegründe.");
+        setDefaultData("UnMute", "%prefix% %name% wurde von %von% entmutet.");
+        setDefaultData("NotMuted", "%prefix% %name% ist nicht gemutet.");
         setDefaultData("NoType", "%prefix%Bitte Tage, Stunden oder Permanent als Typ eingeben.");
         setDefaultData("AddReason", "%prefix%Mutegrund &a%name% &7erfolgreich hinzugefügt.");
         setDefaultData("NoDauer", "%prefix%Bitte eine gültige Dauer eingeben.");
@@ -106,6 +108,8 @@ public class MuteConfig {
             msg = msg.replaceAll("%dauer%", data1);
         if(msg.contains("%grund%"))
             msg = msg.replaceAll("%grund%", data);
+        if(msg.contains("%von%"))
+            msg = msg.replaceAll("%von%", data1);
         msg = ChatColor.translateAlternateColorCodes('&', msg);
         return TextComponent.fromLegacyText(msg);
     }
