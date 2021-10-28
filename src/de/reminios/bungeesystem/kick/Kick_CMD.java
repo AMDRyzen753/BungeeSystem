@@ -35,7 +35,7 @@ public class Kick_CMD extends Command {
                 return;
             }
             ProxiedPlayer target = BungeeCord.getInstance().getPlayer(name);
-            if(target.hasPermission("system.kick.bypass")) {
+            if(target.hasPermission("system.kick.bypass") && sender instanceof ProxiedPlayer) {
                 sender.sendMessage(KickConfig.getMSG("NoPerms", "", ""));
                 return;
             }

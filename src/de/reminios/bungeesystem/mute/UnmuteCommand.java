@@ -24,7 +24,7 @@ public class UnmuteCommand extends Command {
 
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
-        if(!(player.hasPermission("system.mute"))) {
+        if(!(player.hasPermission("system.unmute"))) {
             player.sendMessage(MuteConfig.mc.getMessage("NoPerms", "", ""));
             return;
         }
@@ -35,12 +35,12 @@ public class UnmuteCommand extends Command {
                 return;
             }
             String uuid = BungeeSystem.plugin.getSql().getData("Spieler", "UUID", "Name", args[0]).toString();
-            if((boolean) BungeeSystem.plugin.getSql().getData("Mutes", "Muted", "UUID", uuid)== false) {
+            if(!((boolean) BungeeSystem.plugin.getSql().getData("Mutes", "Muted", "UUID", uuid))) {
                 player.sendMessage(MuteConfig.mc.getMessage("NotMuted", args[0], ""));
                 return;
             }
             String id = BungeeSystem.plugin.getSql().getData("Mutes", "Grund", "UUID", uuid).toString();
-            if (!(player.hasPermission("system.mute." + id)))  {
+            if (!(player.hasPermission("system.unmute." + id)))  {
                 player.sendMessage(MuteConfig.mc.getMessage("NoPerms", "", ""));
                 return;
             }
@@ -50,7 +50,7 @@ public class UnmuteCommand extends Command {
             BungeeSystem.plugin.getSql().updateData("Mutes", "Mutezeit","0","UUID",uuid);
             BungeeSystem.plugin.getSql().updateData("Mutes", "Typ","0","UUID",uuid);
             for(ProxiedPlayer all : BungeeCord.getInstance().getPlayers()) {
-                if(all.hasPermission("system.mute")) {
+                if(all.hasPermission("system.unmute")) {
                     all.sendMessage(MuteConfig.mc.getMessage("UnMute", name, player.getName()));
                 }
             }
